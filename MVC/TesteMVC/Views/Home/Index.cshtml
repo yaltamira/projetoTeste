@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Login - AppTeste";
+}
+<script src="~/Scripts/angularjs/usuario/model/login.js"></script>
+<script src="~/Scripts/angularjs/usuario/controller/login.js"></script>
+<div class="jumbotron" ng-controller="loginController as login">
+    <h2>Prova</h2>
+    <form novalidate name="loginForm" ng-submit="loginForm.$valid && login.acessar()">
+        <div class="form-group">
+            <input type="email"
+                   name="txtEmail"
+                   placeholder="email@dominio.com"
+                   maxlength="600"
+                   ng-model="login.usuario.login"
+                   required />
+            <div ng-show="loginForm.$submitted || loginForm.txtEmail.$touched">
+                <span class="label label-danger" ng-show="loginForm.txtEmail.$error.required">Informe seu e-mail</span>
+                <span class="label label-danger" ng-show="loginForm.txtEmail.$error.email">E-mail inválido.</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="password"
+                   name="txtSenha"
+                   placeholder="informe sua senha"
+                   maxlength="40"
+                   ng-model="login.usuario.senha"
+                   required />
+            <div ng-show="loginForm.$submitted || loginForm.txtSenha.$touched">
+                <span class="label label-danger" ng-show="loginForm.txtSenha.$error.required">Informe a sua senha</span>
+            </div>
+        </div>
+
+        <div class="form-group" ng-show="login.erro.erro">
+            <label ng-repeat="mensagem in login.erro.mensagens" class="label label-danger">{{mensagem}}</label>
+        </div>
+        <div class="form-group" ng-show="aguarde">
+            <label class="label label-info">Logando</label>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary tamanho-padrao" ng-hide="aguarde">Acessar</button>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary tamanho-padrao" ng-click="login.criarConta()" ng-hide="aguarde">Criar uma conta</button>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary tamanho-padrao" ng-click="login.esqueciMinhaSenha()" ng-hide="aguarde">Esqueci minha senha</button>
+        </div>
+    </form>
+</div>

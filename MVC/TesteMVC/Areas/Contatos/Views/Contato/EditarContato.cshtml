@@ -1,0 +1,96 @@
+﻿@{
+    if (string.IsNullOrEmpty(ViewBag.id))
+    {
+        ViewBag.Title = "Criar Contato";
+    }
+    else
+    {
+        ViewBag.Title = "Alterar Contato";
+    }
+}
+<script src="~/Scripts/angularjs/contato/controller/cadastroContato.js"></script>
+<script src="~/Scripts/angularjs/contato/model/cadastroContato.js"></script>
+
+<div class="jumbotron" ng-controller="cadastroContatoController as cadastro" ng-init="cadastro.init('@ViewBag.id')">
+    <h2>@ViewBag.Title</h2>
+    <form novalidate name="cadastroForm" ng-submit="cadastroForm.$valid && cadastro.gravar()">
+        <input type="hidden" name="txtIdContato" ng-model="contato.IdContato">
+        <div class="row form-group">
+            <div class="col-md-2 col-lg-2">
+                <label for="txtNome" class="label-form-cadastro">Nome: </label>
+            </div>
+            <div class="col-md-5 col-lg-5">
+                <input type="text"
+                       name="txtNome"
+                       placeholder="Nome Completo"
+                       maxlength="600"
+                       class="text-form-cadastro"
+                       ng-model="contato.Nome"
+                       required />
+            </div>
+            <div class="col-md-5 col-lg-5" ng-show="cadastroForm.$submitted || cadastroForm.txtNome.$touched">
+                <span class="label label-danger" ng-show="cadastroForm.txtNome.$error.required">Informe seu nome</span>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-2 col-lg-2">
+                <label for="txtEmail" class="label-form-cadastro">E-mail: </label>
+            </div>
+            <div class="col-md-5 col-lg-5">
+                <input type="email"
+                       name="txtEmail"
+                       placeholder="email@dominio.com"
+                       maxlength="600"
+                       class="text-form-cadastro"
+                       ng-model="contato.Email"
+                       required />
+            </div>
+            <div class="col-md-5 col-lg-5" ng-show="cadastroForm.$submitted || cadastroForm.txtEmail.$touched">
+                <span class="label label-danger" ng-show="cadastroForm.txtEmail.$error.required">Informe seu e-mail</span>
+                <span class="label label-danger" ng-show="cadastroForm.txtEmail.$error.email">E-mail inválido.</span>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2 col-lg-2">
+                <label for="txtTelefone" class="label-form-cadastro">Telefone: </label>
+            </div>
+            <div class="col-md-5 col-lg-5">
+                (
+                <input type="text"
+                       name="txtDDD"
+                       placeholder="11"
+                       maxlength="2"
+                       class="text-form-cadastro text-form-ddd"
+                       ng-model="contato.DDD"
+                       min="11"
+                       max="99"
+                       required
+                       telefone />)
+                <input type="text"
+                       name="txtTelefone"
+                       placeholder="945850000"
+                       maxlength="10"
+                       class="text-form-cadastro text-form-telefone"
+                       ng-model="contato.Telefone"
+                       required
+                       telefone />
+            </div>
+            <div class="col-md-5 col-lg-5" ng-messages="cadastroForm.txtDDD.$error" ng-show="cadastroForm.$submitted || cadastroForm.txtDDD.$touched || cadastroForm.txtTelefone.$touched">
+                <span class="label label-danger" ng-show="cadastroForm.txtDDD.$error.required">DDD é obrigatório</span>
+                <span class="label label-danger" ng-show="cadastroForm.txtDDD.$error.DDDTexto">DDD deve ser numérico</span>
+                <span class="label label-info" ng-show="cadastroForm.txtDDD.$error.DDDValido">DDD deve ser entre 11 e 99</span>
+                <span class="label label-danger" ng-show="cadastroForm.txtTelefone.$error.required">Telefone é obrigatório</span>
+                <span class="label label-danger" ng-show="cadastroForm.txtTelefone.$error.TelefoneValido">Telefone deve ser numérico</span>
+            </div>
+        </div>
+        <div class="form-group" ng-show="cadastro.erro.erro">
+            <label class="label label-danger" ng-repeat="msgErro in cadastro.erro.mensagens">{{msgErro }}!</label>
+        </div>
+        {{cadastroForm.erro.erro}}
+        {{cadastroForm.erro.mensagem}}
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary tamanho-padrao">Gravar</button>
+        </div>
+    </form>
+</div>

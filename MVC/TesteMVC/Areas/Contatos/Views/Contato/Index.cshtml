@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Logado";
+}
+<hr />
+
+<div ng-controller="contatoController as contatoCtrl">
+    <div>{{contatoCtrl.listaContatos}}</div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Nome</td>
+                <td>E-mail</td>
+                <td>Telefone</td>
+                <td>&nbsp;</td>
+            </tr>
+        </thead>
+        <tbody ng-repeat="contato in listaContatos">
+            <tr>
+                <td>{{contato.Nome}}</td>
+                <td>{{contato.Email}}</td>
+                <td>({{contato.DDD}}){{contato.Telefone}}</td>
+                <td>
+                    <a href="/Contatos/Contato/EditarContato/{{contato.IdContato}}" ng-hide="aguarde" class="label label-info">Editar</a>
+                    <a href="#" ng-click="contatoCtrl.excluirUsuario(contato.IdContato)" ng-hide="aguarde" class="label label-danger">Excluir</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

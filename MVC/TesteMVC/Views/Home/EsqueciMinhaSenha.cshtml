@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Esqueci Minha Senha";
+}
+<script src="~/Scripts/angularjs/usuario/controller/lembrarsenha.js"></script>
+<script src="~/Scripts/angularjs/usuario/model/lembrarsenha.js"></script>
+
+<div class="jumbotron" ng-controller="lembrarSenhaController as lembrar">
+    <h2>Esqueci Minha Senha</h2>
+    <form novalidate name="lembrarForm" ng-submit="lembrarForm.$valid && lembrar.enviar()">
+        <div class="form-group">
+            <label for="txtEmail"></label>
+            <input type="email"
+                   name="txtEmail"
+                   placeholder="email@dominio.com"
+                   maxlength="600"
+                   ng-model="lembrar.usuario.email"
+                   required />
+            <div ng-show="lembrarForm.$submitted || lembrarForm.txtEmail.$touched">
+                <span class="label label-danger" ng-show="lembrarForm.txtEmail.$error.required">Informe seu e-mail</span>
+                <span class="label label-danger" ng-show="lembrarForm.txtEmail.$error.email">E-mail inválido.</span>
+            </div>
+        </div>
+        <div class="form-group" ng-show="lembrar.erro.mensagens.length > 0">
+            <label ng-repeat="mensagem in lembrar.erro.mensagens" class="label label-danger">{{mensagem}}</label>
+        </div>
+        <div class="form-group" ng-show="aguarde">
+            <label class="label label-info">Enviando e-mail</label>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary tamanho-padrao" ng-hide="aguarde">Enviar</button>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary tamanho-padrao" ng-click="lembrar.home()" ng-hide="aguarde">Tela de Login</button>
+        </div>
+    </form>
+</div>
+

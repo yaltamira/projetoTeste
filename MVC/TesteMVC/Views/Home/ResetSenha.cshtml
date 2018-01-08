@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Verificar senha";
+}
+<script src="~/Scripts/angularjs/usuario/controller/resetSenha.js"></script>
+
+<div class="jumbotron" ng-controller="resetSenhaController as reset" ng-init="reset.init('@ViewBag.usuario', '@ViewBag.hash')">
+    <h2>Alterar Senha</h2>
+    <form novalidate name="cadastroForm" ng-submit="cadastroForm.$valid && reset.atualizar()">
+        <div class="row form-group" ng-show="usuarioValido">
+            <div class="col-md-2 col-lg-2">
+                <label for="txtSenha" class="label-form-cadastro">Senha: </label>
+            </div>
+            <div class="col-md-5 col-lg-5">
+                <input type="password"
+                       name="txtSenha"
+                       placeholder="Digíte uma senha"
+                       maxlength="40"
+                       class="text-form-cadastro"
+                       ng-model="reset.usuario.senha"
+                       ng-minlength="6"
+                       required />
+            </div>
+            <div class="col-md-5 col-lg-5" ng-show="cadastroForm.$submitted || cadastroForm.txtSenha.$touched">
+                <span class="label label-danger" ng-show="cadastroForm.txtSenha.$error.required">Informe a sua senha</span>
+                <span class="label label-danger" ng-hide="cadastroForm.txtSenha.$valid">A senha deverá conter no mínimo 6 caracteres</span>
+            </div>
+        </div>
+        <div class="row form-group" ng-show="usuarioValido">
+            <div class="col-md-2 col-lg-2">
+                <label for="txtRepeteSenha" class="label-form-cadastro">Repita a senha: </label>
+            </div>
+            <div class="col-md-5 col-lg-5">
+                <input type="password"
+                       name="txtSenha2"
+                       placeholder="Digíte novamente sua senha"
+                       maxlength="40"
+                       class="text-form-cadastro"
+                       ng-model="reset.usuario.senha2"
+                       ng-minlength="6"
+                       ng-blur="reset.verificaSenha()"
+                       required />
+            </div>
+            <div class="col-md-5 col-lg-5" ng-show="cadastroForm.$submitted || cadastroForm.txtSenha2.$touched">
+                <span class="label label-danger" ng-show="cadastroForm.txtSenha2.$error.required">Informe a sua senha</span>
+            </div>
+        </div>
+        <div class="form-group" ng-show="erro.erro">
+            <label class="label label-danger" ng-repeat="msgErro in erro.mensagens">{{msgErro }}!</label>
+        </div>
+        <div class="form-group" ng-show="aguarde">
+            <label class="label label-info">Efetuando o cadastro</label>
+        </div>
+        <div class="form-group" ng-show="atualizado">
+            <label class="label label-success">Senha atualizada com sucesso. Volte para a tela de login e informe seu login e senha.</label>
+        </div>
+        <div class="form-group" ng-show="!atualizado">
+            <button type="submit" ng-show="usuarioValido || !aguarde" class="btn btn-primary tamanho-padrao">Atualizar</button>
+        </div>
+    </form>
+
+    <div class="form-group">
+        <button class="btn btn-primary tamanho-padrao" ng-hide="aguarde" ng-click="reset.home()">Tela de login</button>
+    </div>
+
+</div>
